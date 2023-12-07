@@ -14,7 +14,6 @@ export const PoemsList: React.FC<PoemsListProps> = ({ poems }) => {
   return (
     <>
       <p>
-        This is where you can map over the data to render a Poem for each item
         {poems.map((poem) => (
           <Poem poem={poem} />
         ))}

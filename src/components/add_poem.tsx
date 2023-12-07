@@ -1,37 +1,51 @@
-import { PoemsResponse } from "./poem_container"
-import { ChangeEvent, useState } from "react"
+import { PoemsResponse } from "./poem_container";
+import { ChangeEvent, useState } from "react";
 
 type AddPoemProps = {
-  setPoems: React.Dispatch<React.SetStateAction<PoemsResponse>>
-}
+  setPoems: React.Dispatch<React.SetStateAction<PoemsResponse>>;
+};
 export const AddPoem: React.FC<AddPoemProps> = ({ setPoems }) => {
   const [inputData, setInputData] = useState({
     title: "",
     body: "",
     author: "",
-  })
+  });
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
-    setInputData((currentData) =>
-      Object.assign({}, currentData, {
-        [event.target.id]: event.target.value,
-      })
-    )
+    setInputData((currentData) => {
+      // console.log(currentData);
+      return { ...currentData, [event.target.id]: event.target.value };
+    });
   }
 
-  function handleSubmitPoem() {
+  async function handleSubmitPoem(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
     try {
-      // This is where you'll implement some data fetching logic to POST a new poem to the API
-      console.log(setPoems)
+      const response = await fetch("poetriumph.com/api/v1/poems", {
+        method: "Post",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title: inputData.title,
+          body: inputData.body,
+          author: inputData.author,
+        }),
+      });
+      if (response.ok) {
+        const { poem } = await response.json();
+        setPoems((poems) => [...poems, poem]);
+        setInputData({ title: "", body: "", author: "" });
+      }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 
   return (
     <>
       <h2>Post a New Poem</h2>
-      <form className="add-poem">
+      <form onSubmit={handleSubmitPoem} className="add-poem">
         <label>
           Poem Title:{" "}
           <input
@@ -62,8 +76,8 @@ export const AddPoem: React.FC<AddPoemProps> = ({ setPoems }) => {
             onChange={handleChange}
           />
         </label>
-        <button onClick={handleSubmitPoem}>Add to Collection</button>
+        <button type="submit">Add to Collection</button>
       </form>
     </>
-  )
-}
+  );
+};
