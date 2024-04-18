@@ -3,6 +3,7 @@ import { ChangeEvent, useState } from "react";
 
 type AddPoemProps = {
   setPoems: React.Dispatch<React.SetStateAction<PoemsResponse>>;
+  //setPoems: PoemsResponse;
 };
 export const AddPoem: React.FC<AddPoemProps> = ({ setPoems }) => {
   const [inputData, setInputData] = useState({
