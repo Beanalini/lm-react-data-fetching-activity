@@ -14,11 +14,11 @@ export const PoemsList: React.FC<PoemsListProps> = ({ poems, setPoems }) => {
   console.log(poems[0]);
   return (
     <>
-      <p>
+      <div>
         {poems.map((poem) => (
-          <Poem poem={poem} setPoems={setPoems} />
+          <Poem key={poem.id} poem={poem} setPoems={setPoems} />
         ))}
-      </p>
+      </div>
     </>
   );
 };
