@@ -26,7 +26,7 @@ export const PoemContainer: React.FC = () => {
 
   return (
     <>
-      <h1>Nature Poems: An Articifial Perspective</h1>
+      <h1>Nature Poems: An Artificial Perspective</h1>
       <AddPoem setPoems={setPoems} />
       <PoemsList poems={poems} setPoems={setPoems} />
 

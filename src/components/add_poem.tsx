@@ -14,7 +14,6 @@ export const AddPoem: React.FC<AddPoemProps> = ({ setPoems }) => {
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     setInputData((currentData) => {
-      // console.log(currentData);
       return { ...currentData, [event.target.id]: event.target.value };
     });
   }
